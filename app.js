@@ -1,7 +1,10 @@
 const dotenv = require('dotenv');
 dotenv.config();
 
-const server = http.createServer((request, response) => {
-    response.write("Hello Arabinda!");
-    response.end();
-}).listen(8081);
+const express = require('express')
+const app = express()
+const port = process.env.PORT;
+
+app.get('/', (req, res) => res.sendFile('views/index.html', {root: __dirname }))
+
+app.listen(port, () => console.log(`Weather App listening on port ${port}!`))
