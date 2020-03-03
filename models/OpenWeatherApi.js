@@ -1,6 +1,6 @@
 'use strict';
 
-const openWeatherApiRootUrl = "http//api.openweathermap.org/data/2.5/";
+const openWeatherApiRootUrl = "http://api.openweathermap.org/data/2.5/";
 const OWApiCurrentWeatherUrl = openWeatherApiRootUrl + "weather";
 const axios = require('axios');
 
@@ -10,6 +10,7 @@ module.exports = class OpenWeatherApi {
             params: {
                 "lat": latitude,
                 "lon": longitude,
+                "units": "metric",
                 "appid": process.env.OPEN_WEATHER_API_KEY
             }
         })
