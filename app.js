@@ -8,11 +8,17 @@ const port = process.env.PORT;
 app.use(express.static('public'));
 
 const bodyParser = require('body-parser');
-app.use(bodyParser);
+app.use(bodyParser.json());
 
 app.post('/get-weather', (req, res) => {
     console.log(`Post request to weather app`,req.body);
-    res.json({});
+    const openWeatherApi = require('./models/OpenWeatherApi');
+    let openWeatherApiObj = new openWeatherApi();
+    openWeatherApiObj.getCurrentWeatherByCoordinates(req.body.latitude, req.body.longitude).then(response => {
+        res.json(response);
+    }).catch(error => {
+        res.json(error);
+    });
 });
 
 app.listen(port, () => console.log(`Weather App listening on port ${port}!`))
