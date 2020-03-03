@@ -11,10 +11,28 @@ $(document).ready(function(){
 
 function positionSuccess(position) {
     console.log(position);
-    
-    var lat = position.coords.latitude;
-    var lng = position.coords.longitude;
-    var acr = position.coords.accuracy;
+
+    const postData = JSON.stringify({ "latitude": position.coords.latitude, "longitude": position.coords.longitude, "accuracy": position.coords.accuracy });
+
+    let xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+            let response = JSON.parse(this.responseText);
+            console.log(response);
+            let weatherReportHolder = document.getElementById("weather-report");
+            if(response.status == "SUCCESS"){
+                weatherReportHolder.innerHTML = "Hurray! Your current location is " + response.data.name + ".<br>And here the temperature is " + response.data.main.temp + "<sup>0</sup>C.";
+            }else{
+                weatherReportHolder.innerHTML = "Alas! Some internal error occured. Try again.";
+            }
+        }
+    });
+
+    xhr.open("POST", "/get-weather");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(postData);
 }
 
 // handle geolocation api errors
