@@ -1,11 +1,11 @@
 'use strict';
+const axios = require('axios');
 
 const openWeatherApiRootUrl = "http://api.openweathermap.org/data/2.5/";
 const OWApiCurrentWeatherUrl = openWeatherApiRootUrl + "weather";
-const axios = require('axios');
 
-module.exports = class OpenWeatherApi {
-    getCurrentWeatherByCoordinates(latitude, longitude) {
+class OpenWeatherApi {
+    static getCurrentWeatherByCoordinates(latitude, longitude) {
         return axios.get(OWApiCurrentWeatherUrl, {
             params: {
                 "lat": latitude,
@@ -24,3 +24,5 @@ module.exports = class OpenWeatherApi {
         });
     }
 }
+
+module.exports = OpenWeatherApi;
