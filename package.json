@@ -1,19 +1,27 @@
 {
   "name": "weather-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple Weather App which shows current weather based on your browser location",
   "main": "app.js",
   "scripts": {
     "dev": "nodemon",
-    "prod": "nodejs ./"
+    "prod": "nodejs ./",
+    "test": "mocha || true"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["Simple Weather App"],
+  "author": "Arabinda Manna",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^7.1.0"
+  },
+  "directories": {
+    "test": "tests"
   }
 }
