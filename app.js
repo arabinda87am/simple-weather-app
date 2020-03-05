@@ -15,12 +15,17 @@ app.use(bodyParser.json());
 app.post('/get-weather', async (req, res) => {
     console.log(`Post request to weather app`,req.body);
     
-    let openWeatherApiObj = new OpenWeatherApi();
-    openWeatherApiObj.getCurrentWeatherByCoordinates(req.body.latitude, req.body.longitude).then(response => {
+    // OpenWeatherApi.getCurrentWeatherByCoordinates(req.body.latitude, req.body.longitude).then(response => {
+    //     res.json(response);
+    // }).catch(error => {
+    //     res.json(error);
+    // });
+    try {
+        let response = await OpenWeatherApi.getCurrentWeatherByCoordinates(req.body.latitude, req.body.longitude);
         res.json(response);
-    }).catch(error => {
+    } catch (error) {
         res.json(error);
-    });
+    }
 });
 
 app.listen(port, () => console.log(`Weather App listening on port ${port}!`))
