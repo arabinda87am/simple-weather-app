@@ -10,6 +10,8 @@ getWeather = async (data) => {
         } catch (error){
             return { "status": "ERROR", "data": "Api call failed. Check OpenWeatherApi.js file." };
         }
+    }else{
+        return { "status": "ERROR", "data": "Latitude or Longitude is not valid." };
     }
 }
 
