@@ -5,7 +5,7 @@ const openWeatherApiRootUrl = "http://api.openweathermap.org/data/2.5/";
 const OWApiCurrentWeatherUrl = openWeatherApiRootUrl + "weather";
 
 class OpenWeatherApi {
-    static getCurrentWeatherByCoordinates(latitude, longitude) {
+    static async getCurrentWeatherByCoordinates(latitude, longitude) {
         return axios.get(OWApiCurrentWeatherUrl, {
             params: {
                 "lat": latitude,
@@ -13,15 +13,16 @@ class OpenWeatherApi {
                 "units": "metric",
                 "appid": process.env.OPEN_WEATHER_API_KEY
             }
-        })
-        .then(function (response) {
-            console.log('getCurrentWeatherByCoordinates SUCCESS', response.data);     
-            return { "status": "SUCCESS", "data": response.data };
-        })
-        .catch(function (error) {
-            console.log('getCurrentWeatherByCoordinates ERROR', error);
-            return Promise.reject({ "status": "ERROR", "data": "Api call failed. Check OpenWeatherApi.js file." });
         });
+        // .then(function (response) {
+        //     // console.log('getCurrentWeatherByCoordinates SUCCESS', response);     
+        //     // return { "status": "SUCCESS", "data": response.data };
+        //     return response;
+        // })
+        // .catch(function (error) {
+        //     // console.log('getCurrentWeatherByCoordinates ERROR', error);
+        //     // return Promise.reject({ "status": "ERROR", "data": "Api call failed. Check OpenWeatherApi.js file." });
+        // });
     }
 }
 

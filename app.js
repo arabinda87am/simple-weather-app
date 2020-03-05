@@ -1,5 +1,6 @@
 const dotenv = require('dotenv');
-const OpenWeatherApi = require('./services/OpenWeatherApi');
+// const OpenWeatherApi = require('./services/OpenWeatherApi');
+const { getWeather } = require('./controllers/weatherController');
 
 dotenv.config();
 
@@ -20,12 +21,13 @@ app.post('/get-weather', async (req, res) => {
     // }).catch(error => {
     //     res.json(error);
     // });
-    try {
-        let response = await OpenWeatherApi.getCurrentWeatherByCoordinates(req.body.latitude, req.body.longitude);
-        res.json(response);
-    } catch (error) {
-        res.json(error);
-    }
+    // try {
+    //     let response = await OpenWeatherApi.getCurrentWeatherByCoordinates(req.body.latitude, req.body.longitude);
+    //     res.json(response);
+    // } catch (error) {
+    //     res.json(error);
+    // }
+    res.json(await getWeather(req.body));
 });
 
 app.listen(port, () => console.log(`Weather App listening on port ${port}!`))
