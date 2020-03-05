@@ -14,15 +14,6 @@ class OpenWeatherApi {
                 "appid": process.env.OPEN_WEATHER_API_KEY
             }
         });
-        // .then(function (response) {
-        //     // console.log('getCurrentWeatherByCoordinates SUCCESS', response);     
-        //     // return { "status": "SUCCESS", "data": response.data };
-        //     return response;
-        // })
-        // .catch(function (error) {
-        //     // console.log('getCurrentWeatherByCoordinates ERROR', error);
-        //     // return Promise.reject({ "status": "ERROR", "data": "Api call failed. Check OpenWeatherApi.js file." });
-        // });
     }
 }
 

@@ -15,18 +15,6 @@ app.use(bodyParser.json());
 
 app.post('/get-weather', async (req, res) => {
     console.log(`Post request to weather app`,req.body);
-    
-    // OpenWeatherApi.getCurrentWeatherByCoordinates(req.body.latitude, req.body.longitude).then(response => {
-    //     res.json(response);
-    // }).catch(error => {
-    //     res.json(error);
-    // });
-    // try {
-    //     let response = await OpenWeatherApi.getCurrentWeatherByCoordinates(req.body.latitude, req.body.longitude);
-    //     res.json(response);
-    // } catch (error) {
-    //     res.json(error);
-    // }
     res.json(await getWeather(req.body));
 });
 
