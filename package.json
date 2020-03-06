@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon",
     "prod": "nodejs ./",
-    "test": "mocha || true"
+    "test": "mocha --recursive || true"
   },
   "keywords": [
     "Simple Weather App"
@@ -23,8 +23,5 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^7.1.0"
-  },
-  "directories": {
-    "test": "tests"
   }
 }
