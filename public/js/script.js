@@ -30,7 +30,7 @@ function positionSuccess(position) {
         }
     });
 
-    xhr.open("POST", "/get-weather");
+    xhr.open("POST", "/weather");
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(postData);
 }
