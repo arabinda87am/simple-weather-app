@@ -23,7 +23,7 @@ function positionSuccess(position) {
             console.log(response);
             let weatherReportHolder = document.getElementById("weather-report");
             if(response.status == "SUCCESS"){
-                weatherReportHolder.innerHTML = "Hurray! Your current location is " + response.data.name + ".<br>And here the temperature is " + response.data.main.temp + "<sup>0</sup>C.";
+                weatherReportHolder.innerHTML = "Hurray! Your current location is " + response.data.cityName + ".<br>And here the temperature is " + response.data.temperature + "<sup>0</sup>C.";
             }else{
                 weatherReportHolder.innerHTML = "Alas! Some internal error occured. Try again.";
             }
