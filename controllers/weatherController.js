@@ -1,22 +1,48 @@
 const OpenWeatherApi = require('../services/OpenWeatherApi');
+const { WeatherHistory } = require('../models/WeatherHistory');
+const { Op } = require('sequelize');
+const moment = require('moment');
 
 getWeather = async (data) => {
     if ((data.latitude !== undefined && data.latitude !== null) && (data.longitude !== undefined && data.longitude !== null)){
         try {
-            let apiData = await OpenWeatherApi.getCurrentWeatherByCoordinates(data.latitude, data.longitude);
-            let responseData = apiData.data;
-            // console.log(responseData);
-            let { WeatherHistory } = require('../models/WeatherHistory');
-            WeatherHistory.then(() => {
-                    WeatherHistory.create({ 
-                    cityName: responseData.name, 
-                    latitude: responseData.coord.lat,
-                    longitude: responseData.coord.lon,
-                    temperature: responseData.main.temp,
+            const weatherHistoryData = await WeatherHistory.findOne({
+                 where: {
+                        latitude: data.latitude.toFixed(2),
+                        longitude: data.longitude.toFixed(2),
+                        createdAt: {
+                            [Op.gte]: moment().subtract(5, 'minutes').toDate()
+                        }
+                    }
+                }
+            );
+            // console.log(weatherHistoryData);
+            let responseData;
+            if (weatherHistoryData !== null) {
+                //Less than 5 minute ego api called happened with same latitude & longitude
+                responseData = {
+                    cityName: weatherHistoryData.cityName,
+                    latitude: weatherHistoryData.latitude,
+                    longitude: weatherHistoryData.longitude,
+                    temperature: weatherHistoryData.temperature,
+                    units: weatherHistoryData.units
+                };
+                
+            }else{
+                //Fetching fresh data from API calling
+                let apiData = await OpenWeatherApi.getCurrentWeatherByCoordinates(data.latitude, data.longitude);
+                responseData = {
+                    cityName: apiData.data.name,
+                    latitude: apiData.data.coord.lat,
+                    longitude: apiData.data.coord.lon,
+                    temperature: apiData.data.main.temp,
                     units: "metric"
-                }).then(res => console.log('Database Insert Successful ' + res.id))
-                .catch(error => console.log('Database Insert Error', error))
-            });
+                };
+                // console.log(responseData);
+                WeatherHistory.create(responseData).then(res => console.log('Database Insert Successful. Insert id: ' + res.id))
+                    .catch(error => console.log('Database Insert Error', error));
+            }
+            
             return { "status": "SUCCESS", "data": responseData };
         } catch (error){
             console.log(error);
