@@ -6,14 +6,27 @@ const OWApiCurrentWeatherUrl = openWeatherApiRootUrl + "weather";
 
 class OpenWeatherApi {
     static async getCurrentWeatherByCoordinates(latitude, longitude) {
-        return axios.get(OWApiCurrentWeatherUrl, {
-            params: {
-                "lat": latitude,
-                "lon": longitude,
-                "units": "metric",
-                "appid": process.env.OPEN_WEATHER_API_KEY
-            }
-        });
+        try {
+            let apiData = await axios.get(OWApiCurrentWeatherUrl, {
+                params: {
+                    "lat": latitude,
+                    "lon": longitude,
+                    "units": "metric",
+                    "appid": process.env.OPEN_WEATHER_API_KEY
+                }
+            });
+            let responseData = {
+                cityName: apiData.data.name,
+                latitude: apiData.data.coord.lat.toFixed(2),
+                longitude: apiData.data.coord.lon.toFixed(2),
+                temperature: apiData.data.main.temp,
+                units: "metric"
+            };
+            return Promise.resolve(responseData);
+        } catch (error) {
+            console.log(error);
+            return Promise.reject("Api call error");
+        }
     }
 }
 

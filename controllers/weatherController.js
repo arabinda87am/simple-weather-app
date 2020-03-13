@@ -11,7 +11,7 @@ getWeather = async (data) => {
                         latitude: data.latitude.toFixed(2),
                         longitude: data.longitude.toFixed(2),
                         createdAt: {
-                            [Op.gte]: moment().subtract(5, 'minutes').toDate()
+                            [Op.gte]: moment().subtract(5, 'minutes').toDate() //checking if same place's data fetched within 5 min, if so it will fetch from db without calling db. as a result it will reduce the api call count and also work as 5min cache.
                         }
                     }
                 }
@@ -32,11 +32,11 @@ getWeather = async (data) => {
                 //Fetching fresh data from API calling
                 let apiData = await OpenWeatherApi.getCurrentWeatherByCoordinates(data.latitude, data.longitude);
                 responseData = {
-                    cityName: apiData.data.name,
-                    latitude: apiData.data.coord.lat,
-                    longitude: apiData.data.coord.lon,
-                    temperature: apiData.data.main.temp,
-                    units: "metric"
+                    cityName: apiData.cityName,
+                    latitude: apiData.latitude,
+                    longitude: apiData.longitude,
+                    temperature: apiData.temperature,
+                    units: apiData.units
                 };
                 // console.log(responseData);
                 WeatherHistory.create(responseData).then(res => console.log('Database Insert Successful. Insert id: ' + res.id))
