@@ -15,6 +15,9 @@ class OpenWeatherApi {
                     "appid": process.env.OPEN_WEATHER_API_KEY
                 }
             });
+
+            // console.log(apiData);
+            
             let responseData = {
                 cityName: apiData.data.name,
                 latitude: apiData.data.coord.lat.toFixed(2),
