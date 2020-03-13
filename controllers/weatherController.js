@@ -1,5 +1,5 @@
 const OpenWeatherApi = require('../services/OpenWeatherApi');
-const { WeatherHistory } = require('../models/WeatherHistory');
+const { WeatherHistory } = require('../models/');
 const { Op } = require('sequelize');
 const moment = require('moment');
 
