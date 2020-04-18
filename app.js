@@ -12,7 +12,7 @@ app.set('view engine', 'ejs');
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
-const { weatherRouter } = require('./routers/weatherRouter');
+const { weatherRouter } = require('./routers/weather');
 
 app.use('/weather', weatherRouter);
 app.get('/', (req, res) => {
